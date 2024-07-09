@@ -4,6 +4,7 @@ struct ContactoEmail{
     string nombresCompletos;
     string telefono;
     string email;
+    int id;
 };
 ContactoEmail contactos[100];
 int numContactos=0;
@@ -16,6 +17,7 @@ void agregarContacto(){
         cin>>contactos[numContactos].telefono;
         cout<<"Ingrese email: ";
         cin>>contactos[numContactos].email;
+        contactos[numContactos].id=numContactos+1; 
         numContactos++;
         cout<<endl;
 		cout<<"Contacto agregado"<<endl;
@@ -23,9 +25,10 @@ void agregarContacto(){
 }
 void eliminarContacto(){
     if (numContactos>0){
-        cout<<"Ingrese el numero de contacto a eliminar (1-"<<numContactos<<"): ";
+        cout<<"Ingrese el numero de contacto a eliminar (1-"<<numContactos<<"): "<<endl;;
         int num;
         cin>>num;
+        cout<<endl;
         if(num >= 1 && num <= numContactos){
             for(int i = num-1; i < numContactos-1; i++){
                 contactos[i]=contactos[i + 1];
@@ -39,6 +42,27 @@ void eliminarContacto(){
         cout<<"No hay contactos para eliminar."<<endl;
     }
 }
+
+void mostrarContactos(){
+    if (numContactos>0){
+        for (int i = 0; i < numContactos - 1; i++) {
+            for (int j = i + 1; j < numContactos; j++) {
+                if (contactos[i].id > contactos[j].id) {
+                    ContactoEmail temp = contactos[i];
+                    contactos[i] = contactos[j];
+                    contactos[j] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < numContactos; i++) {
+            std::cout << "Contacto " << i + 1 << ":" << std::endl;
+            std::cout << "Nombre: " << contactos[i].nombresCompletos << ", Telefono: " << contactos[i].telefono << ", Email: " << contactos[i].email << std::endl;
+        }
+    } else {
+        std::cout << "No hay contactos registrados." << std::endl;
+    }
+}
+
 void mostrarMenu(){
 	cout<<endl;
     cout<<"Menu:"<<endl;
@@ -62,6 +86,9 @@ int main(){
                 break;
             case 'b':
                 eliminarContacto();
+                break;
+            case 'c':
+                mostrarContactos();
                 break;
             case 'e':
             	cout<<endl;

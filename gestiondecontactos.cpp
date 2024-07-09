@@ -21,8 +21,26 @@ void agregarContacto(){
 		cout<<"Contacto agregado"<<endl;
 		cout<<endl;
 }
-
+void eliminarContacto(){
+    if (numContactos>0){
+        cout<<"Ingrese el numero de contacto a eliminar (1-"<<numContactos<<"): ";
+        int num;
+        cin>>num;
+        if(num >= 1 && num <= numContactos){
+            for(int i = num-1; i < numContactos-1; i++){
+                contactos[i]=contactos[i + 1];
+            }
+            numContactos--;
+            cout<<"Contacto eliminado"<<endl;
+        }else{
+            cout<<"Numero de contacto invalido."<<endl;
+        }
+    }else{
+        cout<<"No hay contactos para eliminar."<<endl;
+    }
+}
 void mostrarMenu(){
+	cout<<endl;
     cout<<"Menu:"<<endl;
     cout<<"a) Agregar un contacto"<<endl;
     cout<<"b) Eliminar un contacto"<<endl;
@@ -37,9 +55,13 @@ int main(){
         mostrarMenu();
         cout<<"Ingrese una opcion: ";
         cin>>opcion;
+        cout<<endl;
         switch (opcion){
             case 'a':
                 agregarContacto();
+                break;
+            case 'b':
+                eliminarContacto();
                 break;
             case 'e':
             	cout<<endl;

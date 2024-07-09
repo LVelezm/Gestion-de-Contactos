@@ -55,11 +55,53 @@ void mostrarContactos(){
             }
         }
         for (int i = 0; i < numContactos; i++) {
-            std::cout << "Contacto " << i + 1 << ":" << std::endl;
-            std::cout << "Nombre: " << contactos[i].nombresCompletos << ", Telefono: " << contactos[i].telefono << ", Email: " << contactos[i].email << std::endl;
+            cout << "Contacto " << i + 1 << ":" << endl;
+            cout << "Nombre: " << contactos[i].nombresCompletos << ", Telefono: " << contactos[i].telefono << ", Email: " << contactos[i].email << endl;
         }
     } else {
         std::cout << "No hay contactos registrados." << std::endl;
+    }
+}
+void mostrarContactosOrdenados(){
+    if (numContactos > 0) {
+        char servidor1[20], servidor2[20];
+        for (int i = 0; i < numContactos - 1; i++) {
+            for (int j = i + 1; j < numContactos; j++) {
+                int k = 0;
+                while (contactos[i].email[k]!= '@') {
+                    k++;
+                }
+                int l = 0;
+                while (contactos[i].email[k + l]!= '\0') {
+                    servidor1[l] = contactos[i].email[k + l];
+                    l++;
+                }
+                servidor1[l] = '\0';
+
+                k = 0;
+                while (contactos[j].email[k]!= '@') {
+                    k++;
+                }
+                l = 0;
+                while (contactos[j].email[k + l]!= '\0') {
+                    servidor2[l] = contactos[j].email[k + l];
+                    l++;
+                }
+                servidor2[l] = '\0';
+
+                if (strcmp(servidor1, servidor2) > 0) {
+                    ContactoEmail temp = contactos[i];
+                    contactos[i] = contactos[j];
+                    contactos[j] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < numContactos; i++) {
+            cout << "Contacto " << i + 1 << ":" << endl;
+            cout << "Nombre: " << contactos[i].nombresCompletos << ", Teléfono: " << contactos[i].telefono << ", Email: " << contactos[i].email <<endl;
+        }
+    }else{
+        cout<<"No hay contactos registrados." <<endl;
     }
 }
 
@@ -89,6 +131,9 @@ int main(){
                 break;
             case 'c':
                 mostrarContactos();
+                break;
+            case 'd':
+                mostrarContactosOrdenados();
                 break;
             case 'e':
             	cout<<endl;
